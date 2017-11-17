@@ -1,0 +1,2 @@
+# plugin para andar nas pastas
+npm install --save-dev babel-plugin-module-resolver
