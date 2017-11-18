@@ -7,6 +7,11 @@ export default class Welcome extends Component {
     header: null,
   };
 
+  navigateToUser = () => {
+    const { navigate } = this.props.navigation;
+    navigate('User');
+  };
+
   render(){
     return(
       <View style={styles.container}>
@@ -20,7 +25,7 @@ export default class Welcome extends Component {
             placeholder="Digite seu usuário"
           />
 
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={this.navigateToUser}>
             <Text style={styles.buttonText}>Prosseguir</Text>
           </TouchableOpacity>
       </View>
