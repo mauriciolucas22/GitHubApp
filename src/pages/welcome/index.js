@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   AsyncStorage,
+  ActivityIndicator,
  } from 'react-native';
 
 export default class Welcome extends Component {
@@ -25,6 +26,7 @@ export default class Welcome extends Component {
 
   state = {
     username: '',
+    loading: false,
     error: false,
   };
 
@@ -39,6 +41,7 @@ export default class Welcome extends Component {
   navigateToUser = () => {
     if(this.state.username.length === 0) return;
 
+    this.setState({ loading: true, error: false });
 
     this.checkAndSaveUser()
       .then(() => {
@@ -77,8 +80,11 @@ export default class Welcome extends Component {
             onChangeText={(username) => { this.setState({username}); }}
           />
 
-          <TouchableOpacity style={styles.button} onPress={this.navigateToUser()}>
-            <Text style={styles.buttonText}>Prosseguir</Text>
+          <TouchableOpacity style={styles.button} onPress={this.navigateToUser}>
+            { this.state.loading
+              ? <ActivityIndicator size="small" color="#FFF"/>
+              : <Text style={styles.buttonText}>Prosseguir</Text>
+            }
           </TouchableOpacity>
       </View>
     );
