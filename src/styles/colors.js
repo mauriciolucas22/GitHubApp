@@ -6,6 +6,8 @@ export default {
 
   inactive: '#878EA0',
 
+  error: '#FF5A5A',
+
   primary: '#444A5A',
   secundary: '#7A91CA',
 

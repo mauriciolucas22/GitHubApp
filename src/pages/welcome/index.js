@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import PropTypes from 'prop-types';
+import api from '../../services/api';
 import { NavigationActions } from 'react-navigation';
+
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  AsyncStorage,
+ } from 'react-native';
 
 export default class Welcome extends Component {
   static propTypes = {
@@ -17,19 +25,38 @@ export default class Welcome extends Component {
 
   state = {
     username: '',
+    error: false,
+  };
+
+  checkAndSaveUser = async () => {
+    const response = await api.get(`/users/${this.state.username}`);
+
+    if( !response.ok ) throw Error();
+
+    await AsyncStorage.setItem('@GitHubApp:username', this.state.username);
   };
 
   navigateToUser = () => {
     if(this.state.username.length === 0) return;
 
-    const { dispatch } = this.props.navigation;
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'User' }),
-      ],
-    });
-    dispatch(resetAction);
+
+    this.checkAndSaveUser()
+      .then(() => {
+        //Success
+        // Envia para prox pag
+        const { dispatch } = this.props.navigation;
+        const resetAction = NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'User' }),
+          ],
+        });
+        dispatch(resetAction);
+      })
+      .catch(() => {
+        //Error
+        this.setState({ error: true });
+      });
   };
 
   render(){
@@ -40,6 +67,8 @@ export default class Welcome extends Component {
             Para continuar, precisamos que voçê informe seu usuário no GitHub
           </Text>
 
+          { this.state.error && <Text style={styles.error}>Esse usuário não existe!</Text> }
+
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
@@ -48,7 +77,7 @@ export default class Welcome extends Component {
             onChangeText={(username) => { this.setState({username}); }}
           />
 
-          <TouchableOpacity style={styles.button} onPress={this.navigateToUser}>
+          <TouchableOpacity style={styles.button} onPress={this.navigateToUser()}>
             <Text style={styles.buttonText}>Prosseguir</Text>
           </TouchableOpacity>
       </View>
