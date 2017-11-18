@@ -10,14 +10,14 @@ export default class Welcome extends Component {
   render(){
     return(
       <View style={styles.container}>
-          <Text style={styles.welcomeTitle}></Text>
+          <Text style={styles.welcomeTitle}>Bem Vindo!</Text>
           <Text style={styles.welcomeDescription}>
             Para continuar, precisamos que voçê informe seu usuário no GitHub
           </Text>
 
           <TextInput
             style={styles.input}
-            placeholder="Degite seu usuário"
+            placeholder="Digite seu usuário"
           />
 
           <TouchableOpacity style={styles.button} onPress={() => {}}>
