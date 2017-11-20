@@ -1,0 +1,2 @@
+git remote add origin https://github.com/mauriciolucas22/GitHubApp.git
+git push -u origin master

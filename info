@@ -10,3 +10,7 @@ npm install --save prop-types
 
 # api do GitHub
 npm install --save apisauce
+
+07 - Estilizando header
+npm install --save react-native-vector-icons
+react-native link react-navite-vector-icons

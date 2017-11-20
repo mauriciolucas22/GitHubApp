@@ -13,6 +13,7 @@ export default class App extends Component {
   }
 
   componentWillMount(){
+    //AsyncStorage.clear();
     this.checkUser().then((response) => {
       this.setState({ userExists: response, userChecked: true });
     });
