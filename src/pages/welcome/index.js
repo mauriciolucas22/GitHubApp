@@ -32,6 +32,7 @@ export default class Welcome extends Component {
 
   checkAndSaveUser = async () => {
     const response = await api.get(`/users/${this.state.username}`);
+    console.tron.log(response);
 
     if( !response.ok ) throw Error();
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 
-import Routes from './routes'
+import createRootNavigator from './routes'
 import "./config/ReactotronConfig";
 
 
@@ -25,8 +25,12 @@ export default class App extends Component {
   };
 
   render() {
-    return (
-      <Routes />
-    );
+    const { userChecked, userExists } = this.state;
+
+    if(!userChecked) return null;
+
+    const Layout = createRootNavigator(userExists);
+
+    return <Layout />;
   }
 }
